@@ -1,0 +1,55 @@
+package org.vaibhav.rockpaperscissors.service;
+
+import org.springframework.stereotype.Service;
+import org.vaibhav.rockpaperscissors.enums.GameResult;
+import org.vaibhav.rockpaperscissors.enums.Move;
+import org.vaibhav.rockpaperscissors.model.Player;
+
+import java.util.Random;
+
+@Service
+public class GameService {
+
+
+    private final ScoreService scoreService;
+    private static final Move[] MOVES = Move.values();  // Use enum for moves
+
+    public GameService(ScoreService scoreService) {
+        this.scoreService = scoreService;
+    }
+
+    /**
+     * Randomly generate a move for the computer.
+     */
+    public Move getRandomMove() {
+        Random random = new Random();
+        return MOVES[random.nextInt(MOVES.length)];
+    }
+
+    /**
+     * Determine the winner between two players and record the result.
+     * Returns the result as an enum (PLAYER1, PLAYER2, or TIE).
+     */
+    public GameResult determineWinner(Move player1Move, Move player2Move, String player1Name, String player2Name) {
+        // Find or create players
+        Player player1 = scoreService.findOrCreatePlayer(player1Name);
+        Player player2 = scoreService.findOrCreatePlayer(player2Name);
+
+        // Check for a tie first
+        if (player1Move == player2Move) {
+            scoreService.saveScore(player1, player2, GameResult.TIE);
+            return GameResult.TIE;
+        }
+
+        // Determine if Player 1 is the winner
+        boolean isPlayer1Winner = (player1Move == Move.rock && player2Move == Move.scissors) ||
+                (player1Move == Move.scissors && player2Move == Move.paper) ||
+                (player1Move == Move.paper && player2Move == Move.scissors);
+
+        // Save the result
+        GameResult result = isPlayer1Winner ? GameResult.PLAYER1 : GameResult.PLAYER2;
+        scoreService.saveScore(player1, player2, result);
+
+        return result;
+    }
+}
