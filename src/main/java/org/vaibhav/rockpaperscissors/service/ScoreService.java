@@ -26,11 +26,8 @@ public class ScoreService {
      */
     public Score saveScore(Player player1, Player player2, GameResult result) {
         Optional<Score> optionalScore = scoreRepository.findByPlayer1AndPlayer2(player1, player2);
-
-        // If no match exists between these two players, create a new score record
         Score score = optionalScore.orElseGet(() -> new Score(player1, player2));
 
-        // Update score based on the result
         switch (result) {
             case TIE:
                 score.incrementTies();
@@ -43,7 +40,6 @@ public class ScoreService {
                 break;
         }
 
-        // Save the updated score
         return scoreRepository.save(score);
     }
 
@@ -84,7 +80,6 @@ public class ScoreService {
             Player opponent;
             int wins, losses, ties;
 
-            // Determine whether the current player is player1 or player2
             if (match.getPlayer1().equals(player)) {
                 opponent = match.getPlayer2();
                 wins = match.getPlayer1Wins();
@@ -112,11 +107,9 @@ public class ScoreService {
         Map<String, Integer> playerScores = new HashMap<>();
 
         for (Score score : scores) {
-            // Update Player 1's total wins
             playerScores.put(score.getPlayer1().getName(),
                     playerScores.getOrDefault(score.getPlayer1().getName(), 0) + score.getPlayer1Wins());
 
-            // Update Player 2's total wins
             playerScores.put(score.getPlayer2().getName(),
                     playerScores.getOrDefault(score.getPlayer2().getName(), 0) + score.getPlayer2Wins());
         }

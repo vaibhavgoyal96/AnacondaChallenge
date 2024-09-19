@@ -18,9 +18,8 @@ public class Score {
 
     private int player1Wins;
     private int player2Wins;
-    private int ties; // New field to store the number of ties
+    private int ties;
 
-    // Constructors, Getters, and Setters
     public Score() {}
 
     public Score(Player player1, Player player2) {
@@ -28,7 +27,7 @@ public class Score {
         this.player2 = player2;
         this.player1Wins = 0;
         this.player2Wins = 0;
-        this.ties = 0; // Initialize ties to zero
+        this.ties = 0;
     }
 
     public Long getId() {

@@ -3,8 +3,8 @@ package org.vaibhav.rockpaperscissors.dto;
 public class GameResponse {
     private String player1Name;
     private String player2Name;
-    private String player1Move;  // Add player1Move
-    private String player2Move;  // Add player2Move
+    private String player1Move;
+    private String player2Move;
     private ScoreResult player1Score;
     private ScoreResult player2Score;
 
@@ -16,8 +16,6 @@ public class GameResponse {
         this.player1Score = player1Score;
         this.player2Score = player2Score;
     }
-
-    // Getters and setters
 
     public String getPlayer1Name() {
         return player1Name;
@@ -78,7 +76,6 @@ public class GameResponse {
             this.ties = ties;
         }
 
-        // Getters and setters
         public int getWins() {
             return wins;
         }

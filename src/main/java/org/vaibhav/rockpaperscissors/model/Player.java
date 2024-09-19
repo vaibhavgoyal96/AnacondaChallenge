@@ -12,7 +12,6 @@ public class Player {
     private Long id;
     private String name;
 
-    // Constructors, Getters, and Setters
     public Player() {}
 
     public Player(String name) {
