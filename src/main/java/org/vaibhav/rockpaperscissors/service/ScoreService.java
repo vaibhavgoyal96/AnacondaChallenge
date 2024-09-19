@@ -27,9 +27,8 @@ public class ScoreService {
     public Score saveScore(Player player1, Player player2, GameResult result) {
         Optional<Score> optionalScore = scoreRepository.findByPlayer1AndPlayer2(player1, player2);
 
-        Score score;
         // If no match exists between these two players, create a new score record
-        score = optionalScore.orElseGet(() -> new Score(player1, player2));
+        Score score = optionalScore.orElseGet(() -> new Score(player1, player2));
 
         // Update score based on the result
         switch (result) {
